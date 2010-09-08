@@ -43,7 +43,8 @@ public class CowboyBot {
         return;
       }
       State goal_state = MakeDecision(pw);
-      pw.IssueOrder(goal_state.source, goal_state.dest, goal_state.num_ships);
+      if (goal_state.source >= 0 && goal_state.dest >= 0 && goal_state.num_ships > 0)
+    	  pw.IssueOrder(goal_state.source, goal_state.dest, goal_state.num_ships);
 /*
       // (1) If we currently have a fleet in flight, just do nothing.
       if (pw.MyFleets().size() >= 1) {

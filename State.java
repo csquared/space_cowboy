@@ -12,7 +12,7 @@ import java.util.List;
       public List<State> children(){
     	  List<State> children = new ArrayList<State>();
         for(Planet my_planet : this.pw.MyPlanets()){
-          for(Planet enemy_planet : this.pw.EnemyPlanets()){ 
+          for(Planet enemy_planet : this.pw.NotMyPlanets()){ 
             State this_state = new State(pw);
             this_state.source = my_planet.PlanetID();
             this_state.dest   = enemy_planet.PlanetID();
