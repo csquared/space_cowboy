@@ -11,26 +11,23 @@ public class CowboyBot {
     // starting point, or you can throw it out entirely and replace it with
     // your own. Check out the tutorials and articles on the contest website at
     // http://www.ai-contest.com/resources.
-    private class State {
-      public void State(){
-      }
-    }
 
-    public static void MakeDecision(PlanetWars pw){
+
+    public static State MakeDecision(PlanetWars pw){
       State initial = new State(pw);
-      return doMakeDecision(initial);
+      return doMakeDecision(initial,4);
     }
 
     //Each state generates its children recursively
     //until depth limit is reached.  The state with
     //the highest score is the state that gets returned.
-    public static void doMakeDecision(state, depth){
+    public static State doMakeDecision(State state, int depth){
       //stop at depth four
       if( depth > 4 ) { return state; }
       int max = -1;
       State max_state = null;
       for (State child : state.children()){
-        State result = doMakeDecision(child, depth +1) 
+        State result = doMakeDecision(child, depth +1); 
         int score = result.score();
         if( score > max ){
           max = score;
