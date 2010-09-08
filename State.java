@@ -9,7 +9,17 @@ import java.util.List;
     	  this.pw = pw;
       }
       public List<State> children(){
-    	  return null;
+    	  List<State> children;
+        for(Planet my_planet : this.pw.MyPlanets()){
+          for(Plan enemy_planet : this.pw.EnemyPlanet()){ 
+            State this_state = new State(pw);
+            this_state.source = my_planet;
+            this_state.dest   = enemy_planet;
+            this_state.num_ships = my_planet.NumShips()/2;
+            children.add(this_state)
+          }
+        } 
+        return children;
       }
       public int score(){
     	  List<Planet> planets = pw.MyPlanets();
