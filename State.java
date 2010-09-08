@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -9,14 +10,14 @@ import java.util.List;
     	  this.pw = pw;
       }
       public List<State> children(){
-    	  List<State> children;
+    	  List<State> children = new ArrayList<State>();
         for(Planet my_planet : this.pw.MyPlanets()){
-          for(Plan enemy_planet : this.pw.EnemyPlanet()){ 
+          for(Planet enemy_planet : this.pw.EnemyPlanets()){ 
             State this_state = new State(pw);
-            this_state.source = my_planet;
-            this_state.dest   = enemy_planet;
+            this_state.source = my_planet.PlanetID();
+            this_state.dest   = enemy_planet.PlanetID();
             this_state.num_ships = my_planet.NumShips()/2;
-            children.add(this_state)
+            children.add(this_state);
           }
         } 
         return children;
@@ -32,6 +33,14 @@ import java.util.List;
     	  List<Fleet> fleets = pw.MyFleets();
     	  for (Fleet fleet : fleets){
     		  totalShips+=fleet.NumShips();
+    	  }
+    	  if (source >= 0 && dest >= 0 && num_ships > 0){
+    		  totalShips -= num_ships;
+    		  if (num_ships > pw.GetPlanet(source).NumShips()){
+    			  totalPlanets++;
+    			  totalGrowth += pw.GetPlanet(source).GrowthRate();
+    			  totalShips += num_ships - pw.GetPlanet(source).NumShips();
+    		  }
     	  }
     	  this.score = (totalPlanets*totalGrowth + totalShips)*(totalGrowth);    	  
     	  return this.score;
