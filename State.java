@@ -13,7 +13,12 @@ import java.util.List;
       }
       public int score(){
     	  List<Planet> planets = pw.MyPlanets();
-    	  
+    	  int totalGrowth=0, totalPlanets=0, totalShips=0;
+    	  for (Planet planet : planets){
+    		  totalPlanets++;
+    		  totalGrowth += planet.GrowthRate();
+    		  totalShips += planet.NumShips();
+    	  }
     	  return score;
       }      
     }
