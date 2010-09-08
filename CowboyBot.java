@@ -16,11 +16,26 @@ public class CowboyBot {
       }
     }
 
+    public static void MakeDecision(PlanetWars pw){
+      State initial = new State(pw);
+      doMakeDecision(initial);
+    }
+
+    public static void doMakeDecision(state, depth){
+      if( depth > 4 ) { return state; }
+      for (State child : state.children()){
+       return doMakeDecision(child, depth +1) 
+      }
+    }
 
     public static void DoTurn(PlanetWars pw) {
-//BEG
-
-
+      // (1) If we currently have a fleet in flight, just do nothing.
+      if (pw.MyFleets().size() >= 1) {
+        return;
+      }
+      State goal_state = MakeDecision(pw);
+      pw.IssueOrder(goal_state.source, goal_state.dest, goal_state.num_ships);
+/*
       // (1) If we currently have a fleet in flight, just do nothing.
       if (pw.MyFleets().size() >= 1) {
           return;
@@ -51,6 +66,7 @@ public class CowboyBot {
           int numShips = source.NumShips() / 2;
           pw.IssueOrder(source, dest, numShips);
       }
+*/
     }
 
     public static void main(String[] args) {
