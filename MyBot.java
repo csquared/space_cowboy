@@ -11,7 +11,16 @@ public class MyBot {
     // starting point, or you can throw it out entirely and replace it with
     // your own. Check out the tutorials and articles on the contest website at
     // http://www.ai-contest.com/resources.
+    private class State {
+      public void State(){
+      }
+    }
+
+
     public static void DoTurn(PlanetWars pw) {
+//BEG
+
+
       // (1) If we currently have a fleet in flight, just do nothing.
       if (pw.MyFleets().size() >= 1) {
           return;
