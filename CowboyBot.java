@@ -18,14 +18,22 @@ public class CowboyBot {
 
     public static void MakeDecision(PlanetWars pw){
       State initial = new State(pw);
-      doMakeDecision(initial);
+      return doMakeDecision(initial);
     }
 
     public static void doMakeDecision(state, depth){
       if( depth > 4 ) { return state; }
+      int max = 0;
+      State max_state = null;
       for (State child : state.children()){
-       return doMakeDecision(child, depth +1) 
+        State result = doMakeDecision(child, depth +1) 
+        int score = result.score();
+        if( score > max ){
+          max = score;
+          max_state = result;
+        }
       }
+      return max_state;
     }
 
     public static void DoTurn(PlanetWars pw) {
