@@ -39,11 +39,14 @@ public class CowboyBot {
 
     public static void DoTurn(PlanetWars pw) {
       // (1) If we currently have a fleet in flight, just do nothing.
-      if (pw.MyFleets().size() >= 1) {
+      if (pw.MyFleets().size() >= 2) {
         return;
       }
       State goal_state = MakeDecision(pw);
-      if (goal_state.source >= 0 && goal_state.dest >= 0 && goal_state.num_ships > 0)
+      if (goal_state.source >= 0   && 
+          goal_state.dest >= 0     &&
+          goal_state.num_ships > 0 && 
+          pw.MyPlanets().size() > 0)
     	  pw.IssueOrder(goal_state.source, goal_state.dest, goal_state.num_ships);
 /*
       // (1) If we currently have a fleet in flight, just do nothing.
