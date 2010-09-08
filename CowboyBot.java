@@ -21,9 +21,13 @@ public class CowboyBot {
       return doMakeDecision(initial);
     }
 
+    //Each state generates its children recursively
+    //until depth limit is reached.  The state with
+    //the highest score is the state that gets returned.
     public static void doMakeDecision(state, depth){
+      //stop at depth four
       if( depth > 4 ) { return state; }
-      int max = 0;
+      int max = -1;
       State max_state = null;
       for (State child : state.children()){
         State result = doMakeDecision(child, depth +1) 
