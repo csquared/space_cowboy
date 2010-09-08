@@ -29,6 +29,11 @@ import java.util.List;
     		  totalGrowth += planet.GrowthRate();
     		  totalShips += planet.NumShips();
     	  }
-    	  return score;
+    	  List<Fleet> fleets = pw.MyFleets();
+    	  for (Fleet fleet : fleets){
+    		  totalShips+=fleet.NumShips();
+    	  }
+    	  this.score = (totalPlanets*totalGrowth + totalShips)*(totalGrowth);    	  
+    	  return this.score;
       }      
     }
