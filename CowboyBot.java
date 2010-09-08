@@ -1,21 +1,49 @@
 import java.util.*;
 
-public class MyBot {
-	/*
-	 * Build State of the world
-	 * take random guesses of next move
-	 * evaluate guesses choose best overall
-	 * opponent modeling
-	 * score = (total growth)*(total planets) + ships/(planets+growth) 
-	 */	
+public class CowboyBot {
+    // The DoTurn function is where your code goes. The PlanetWars object
+    // contains the state of the game, including information about all planets
+    // and fleets that currently exist. Inside this function, you issue orders
+    // using the pw.IssueOrder() function. For example, to send 10 ships from
+    // planet 3 to planet 8, you would say pw.IssueOrder(3, 8, 10).
+    //
+    // There is already a basic strategy in place here. You can use it as a
+    // starting point, or you can throw it out entirely and replace it with
+    // your own. Check out the tutorials and articles on the contest website at
+    // http://www.ai-contest.com/resources.
     private class State {
       public void State(){
       }
     }
 
+    public static void MakeDecision(PlanetWars pw){
+      State initial = new State(pw);
+      return doMakeDecision(initial);
+    }
+
+    public static void doMakeDecision(state, depth){
+      if( depth > 4 ) { return state; }
+      int max = 0;
+      State max_state = null;
+      for (State child : state.children()){
+        State result = doMakeDecision(child, depth +1) 
+        int score = result.score();
+        if( score > max ){
+          max = score;
+          max_state = result;
+        }
+      }
+      return max_state;
+    }
 
     public static void DoTurn(PlanetWars pw) {
-//BEG
+      // (1) If we currently have a fleet in flight, just do nothing.
+      if (pw.MyFleets().size() >= 1) {
+        return;
+      }
+      State goal_state = MakeDecision(pw);
+      pw.IssueOrder(goal_state.source, goal_state.dest, goal_state.num_ships);
+/*
       // (1) If we currently have a fleet in flight, just do nothing.
       if (pw.MyFleets().size() >= 1) {
           return;
@@ -46,6 +74,7 @@ public class MyBot {
           int numShips = source.NumShips() / 2;
           pw.IssueOrder(source, dest, numShips);
       }
+*/
     }
 
     public static void main(String[] args) {
